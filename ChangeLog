@@ -1,0 +1,23 @@
+Copyright (c) 2000 Rootlevel. All rights reserved. This program is free
+software; you can redistribute it and/or modify it under the same terms
+as Perl itself.
+
+Net::Pager version 1.12
+    
+	* Added UserAgent string to URL that hits SimpleWire's RPCs
+	* Improved Installation Process
+
+Net::Pager version 1.10
+
+    * No outside dependencies
+    * Removed Net::Telnet dependence by adding own telnet functionality
+    * Improved fail-safe redundancy by checking for correct return from
+      SimpleWire's network.
+    * Streamlined downloading process and improved downloading performance.
+    * Changed RPC download directories
+    * Added serviceExists() function
+    * Added debug statements
+
+Net::Pager version 0.90
+
+    * First public BETA release of Net::Pager
