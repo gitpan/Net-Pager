@@ -1,9 +1,14 @@
 
-                        Net::Pager, version 1.12
+                        Net::Pager, version 2.00
 
-Copyright (c) 2000 Rootlevel. All rights reserved. This program is free
+Copyright (c) 2000 SimpleWire. All rights reserved. This program is free
 software; you can redistribute it and/or modify it under the same terms
 as Perl itself.
+
+Written By: Joe Lauer <joelauer@simplewire.com>
+
+For further documentation and support, please check out
+www.simplewire.com
 
 
   Description
@@ -28,16 +33,61 @@ as Perl itself.
     documentation. SimpleWire's site has more example code and perl
     client tools.
 
-  What To Know Before Using
-  ----------------
 
-    .  Net::Pager attempts to bypass most firewall problems by only
-       interacting with port 80 of any of SimpleWire's servers.
+  New Features in 2.00
+  --------------------
 
-    .  The same functionality encompassed in this module is also currently
-       available in a Java Class and soon an Active X Control.  Just
-       visit www.simplewire.com to download the newest versions of any of
-       those.
+    * The module was totally re-written since XML has been introduced
+      as the language for all client/server communication between this
+      client tool and the SimpleWire network.
+    * Support for asynchronous sending of pages has been added.  This
+      means that network delays are now handled by the SimpleWire servers
+      rather than the client tools. This has eliminated any timeout
+      bugs that might occur, since SimpleWire can now respond immediately.
+    * Object oriented design following the HTTP::Response and
+      HTTP::Request methodology.  Clients now construct Net::Pager::Request
+      objects, submit various requests through this object, and use
+      the Net::Pager::Response object to analyze the response from the
+      SimpleWire servers.  This resulted in three more objects:
+      Net::Pager::Common, Net::Pager::Request, and Net::Pager::Response.
+    * SimpleWire now captures more error messages from each paging service.
+      A good example is the attempt to send pages to Sprint PCS phones
+      even though text messaging costs extra and most users don't have
+      it.  SimpleWire now catches this kind of error.
+    * Added new services: Verizon, VoiceStream/OmniPoint
+      Bell Mobility, and Weblink Wireless Two-Way.
+	* Introduction of a ticket system where a TICKET ID is assigned
+      to every sendpage transaction.  This allows clients to check on
+      the status of pages sent asynchronously or to check up on older
+      pages sent through our system.
+    * Added support for sending a page to a simplewire alias.  This
+      means clients can now send pages to an alias instead of a pin
+      and service id, provided that the alias is setup and registered
+      on the SimpleWire network.
+    * Improved documentation on error codes and tapping into our
+      protocol.  Please refer to www.simplewire.com to download these
+      helpful documents.
+	* Fixed small issue with clients entering pins that contain a dash
+	  or a period.  Our servers will now filter out this garbage to
+      ensure proper formatting of the pin.
+    * Added support for Subscriber IDs and Subscriber passwords.
+    * Added an optional delimiter parameter to be passed along with a page
+      so that client tools can override our default delimiter to
+      seperate the from, callback, and text fields in messages.
+    * Fixed timeout bugs by using LWP::UserAgent instead of our own
+      networking code.
+    * SimpleWire can now support proxy servers via the LWP::UserAgent
+      module.  However, this will take custom tweaking of our
+	  Net::Pager moduele until native support is added.
+    * Revised the system for remotely retrieving our service list.  Many new
+      options have been added so that the list comes back sorted or
+      filtered in whatever way you like.
+    * Improved functions to use with the service list.  New functions
+      include DBI-like interface for retrieval and looping.  Such
+      functions are fetchrow_service, fetchall_services, and fetchrow_rewind.
+    * Fixed small bug that was related to timeouts where 2 or 3 duplicated
+      pages would be sent off.  This was solved via LWP and smarter
+      error checking before moving onto the next simplewire server.
 
 
   Archive Location
@@ -65,7 +115,9 @@ as Perl itself.
     User documentation in POD format is contained within the module
     source (i.e. the .pm file).  Installing using "make install"
     places this documentation in a man page in the perl library under
-    the directory "man/man3".
+    the directory "man/man3".  However, the best documentation is
+    the example code in the /eg directory form the tar.gz file or
+    on www.simplewire.com.
 
 
   Installation
@@ -139,13 +191,12 @@ as Perl itself.
 	support forum for anwers.
 
 ------------
-Rootlevel
+SimpleWire
 743 Beaubien
 Suite 300
 Detroit, MI 48226
 313.961.4407
 
-Started:  11/11/1999
-Released: 03/09/2000
+Released: 08/28/2000
 Coded By: Joe Lauer <joelauer@rootlevel.com>
 Contact:  John Lauer <jlauer@rootlevel.com>
